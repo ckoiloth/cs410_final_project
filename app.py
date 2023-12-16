@@ -13,7 +13,7 @@ CORS(app)
 def hello():
     return 'Hello, Flask!'
 
-
+# This function is meant to upload documents
 @app.route('/upload', methods=['POST'])
 def upload_pdf():
     for _, file in request.files.items():
@@ -33,7 +33,7 @@ def upload_pdf():
             return jsonify({'error': 'Failed to upload file'})
     return jsonify({"error": None})
 
-
+# This is a test endpoint to upload text only documents
 @app.route("/upload-txt", methods=['POST'])
 def upload_textfile():
     if 'file' not in request.files:

@@ -7,6 +7,11 @@ import os
 local_location = 'faiss.index'
 # Load FAISS if the local location exists
 
+## This function will initialize the FAISS vector store by looking to see if there is already a local
+## location for the FAISS index. If not, it will create a new FAISS index.
+## It will also save the vector store to a local location.
+## The local location is 'faiss.index'.
+
 faiss: FAISS | None = None
 embeddings = HuggingFaceEmbeddings()
 
@@ -18,9 +23,15 @@ else:
     print('Creating FAISS index')
     faiss.save_local(local_location)
 
+
 vectorStoreRetriever = faiss.as_retriever(search_type="similarity", search_kwargs={"k": 2})
+# This is a vector store retriever that is able to use a similarity function based on the query
 
 
+## This function will save uploaded documents by first vectorizing them
+## and then adding them to the vector store.
+## It will also save the vector store to a local location.
+## The local location is 'faiss.index'.
 def saveDocument(filepath: str):
     loader = None
     if not filepath.endswith(".pdf") and not filepath.endswith("txt"):
